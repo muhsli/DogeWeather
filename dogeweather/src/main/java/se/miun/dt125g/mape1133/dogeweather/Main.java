@@ -18,6 +18,7 @@ public class Main extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
+        //fitta
 
     }
 
