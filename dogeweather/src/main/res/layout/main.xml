@@ -13,19 +13,65 @@
             android:id="@+id/titleText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:textSize="35sp"
+            android:textSize="30sp"
             android:text="@string/test_string"
-            android:textColor="@android:color/holo_blue_bright"/>
+            android:textColor="@android:color/holo_blue_bright"
+            android:layout_alignBottom="@+id/imageView"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:id="@+id/windText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="30sp"
+            android:text="@string/wind_string"
+            android:textColor="@android:color/holo_purple"
+            android:layout_above="@+id/imageView"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:id="@+id/rainText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="30sp"
+            android:text="@string/rain_string"
+            android:textColor="#ffff00"
+            android:layout_alignParentBottom="true"
+            android:layout_alignRight="@+id/imageView"
+            android:layout_alignEnd="@+id/imageView" />
+
+        <TextView
+            android:id="@+id/veryText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="30sp"
+            android:text="@string/very_string"
+            android:textColor="#ff0000"
+            android:layout_above="@+id/rainText"
+            android:layout_alignLeft="@+id/imageView"
+            android:layout_alignStart="@+id/imageView" />
+
+        <TextView
+            android:id="@+id/cloudyText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="30sp"
+            android:text="@string/cloudy_string"
+            android:textColor="#1aff00"
+            android:layout_above="@+id/windText"
+            android:layout_alignLeft="@+id/rainText"
+            android:layout_alignStart="@+id/rainText" />
+
 
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="300dp"
             android:layout_height="300dp"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
             android:contentDescription="@string/image_string"
             android:scaleType="fitCenter"
-            android:src="@drawable/doge"/>
+            android:src="@drawable/doge"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
     </RelativeLayout>
 </LinearLayout>
