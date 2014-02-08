@@ -56,9 +56,101 @@ public class Main extends Activity {
             ex.printStackTrace();
         }
 
-        if (symbolValue == 4){
-            weather = "cloud";
+        switch (symbolValue) {
+
+            case 1:
+                weather = "sunny";
+                break;
+
+            case 2:
+                weather = "little clouds";
+                break;
+
+            case 3:
+                weather = "partly cloud";
+                break;
+
+            case 4:
+                weather = "cloudy";
+                break;
+
+            case 5:
+                weather = "littel rain and sun";
+                break;
+
+            case 6:
+                weather = "rain and THUNDER and sun";
+                break;
+
+            case 7:
+                weather = "sun and sleet";
+                break;
+
+            case 8:
+                weather = "snowy and sun";
+                break;
+
+            case 9:
+                weather = "little rain";
+                break;
+
+            case 10:
+                weather = "rainy not niec";
+                break;
+
+            case 11:
+                weather = "rain and THUNDER";
+                break;
+
+            case 12:
+                weather = "sleet not";
+                break;
+
+            case 13:
+                weather = "very snow";
+                break;
+
+            case 14:
+                weather = "snow and THUNDER";
+                break;
+
+            case 15:
+                weather = "foggy";
+                break;
+
+            case 16:
+                weather = "winter sun";
+                break;
+
+            case 17:
+                weather = "winter sun little rain";
+                break;
+
+            case 18:
+                weather = "winter sun little rain doe";
+                break;
+
+            case 19:
+                weather = "winter snow and SUN";
+                break;
+
+            case 20:
+                weather = "sleet and sun and THUNDER vry";
+                break;
+
+            case 21:
+                weather = "snowy sun vry THUNDER";
+                break;
+
+            case 22:
+                weather = "litle rain och THUNDER such not";
+                break;
+
+            case 23:
+                weather = "sleet and thunder very not";
+                break;
         }
+
         titleTV.setText("wow");
         windTV.setText("very windy "+windspeedValue+"M/s");
         rainTV.setText("so "+weather+" wow");
