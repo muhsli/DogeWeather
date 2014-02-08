@@ -23,11 +23,11 @@ import javax.xml.parsers.ParserConfigurationException;
 
 public class Main extends Activity {
 
-    int symbolValue = 1337;
+    int symbolValue = 0;
     String weather = "much";
-    String temperatureValue ="wow";
-    String windspeedValue ="such very";
-    String cloudinessValue ="many so";
+    String temperatureValue = "disconect";
+    String windspeedValue = "internet pls";
+    String cloudinessValue = "not online wow";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,161 +52,166 @@ public class Main extends Activity {
 
         try {
             retrieveWeatherDataThread.join();
-        } catch (InterruptedException ex){
+        } catch (InterruptedException ex) {
             ex.printStackTrace();
         }
 
-        switch (symbolValue) {
+        if (symbolValue == 0) {
+            weather = "connection not";
+        } else {
+            switch (symbolValue) {
 
-            case 1:
-                weather = "sunny";
-                break;
+                case 1:
+                    weather = "sunny";
+                    break;
 
-            case 2:
-                weather = "little clouds";
-                break;
+                case 2:
+                    weather = "little clouds";
+                    break;
 
-            case 3:
-                weather = "partly cloud";
-                break;
+                case 3:
+                    weather = "partly cloud";
+                    break;
 
-            case 4:
-                weather = "cloudy";
-                break;
+                case 4:
+                    weather = "cloudy";
+                    break;
 
-            case 5:
-                weather = "littel rain and sun";
-                break;
+                case 5:
+                    weather = "littel rain and sun";
+                    break;
 
-            case 6:
-                weather = "rain and THUNDER and sun";
-                break;
+                case 6:
+                    weather = "rain and THUNDER and sun";
+                    break;
 
-            case 7:
-                weather = "sun and sleet";
-                break;
+                case 7:
+                    weather = "sun and sleet";
+                    break;
 
-            case 8:
-                weather = "snowy and sun";
-                break;
+                case 8:
+                    weather = "snowy and sun";
+                    break;
 
-            case 9:
-                weather = "little rain";
-                break;
+                case 9:
+                    weather = "little rain";
+                    break;
 
-            case 10:
-                weather = "rainy not niec";
-                break;
+                case 10:
+                    weather = "rainy not niec";
+                    break;
 
-            case 11:
-                weather = "rain and THUNDER";
-                break;
+                case 11:
+                    weather = "rain and THUNDER";
+                    break;
 
-            case 12:
-                weather = "sleet not";
-                break;
+                case 12:
+                    weather = "sleet not";
+                    break;
 
-            case 13:
-                weather = "very snow";
-                break;
+                case 13:
+                    weather = "very snow";
+                    break;
 
-            case 14:
-                weather = "snow and THUNDER";
-                break;
+                case 14:
+                    weather = "snow and THUNDER";
+                    break;
 
-            case 15:
-                weather = "foggy";
-                break;
+                case 15:
+                    weather = "foggy";
+                    break;
 
-            case 16:
-                weather = "winter sun";
-                break;
+                case 16:
+                    weather = "winter sun";
+                    break;
 
-            case 17:
-                weather = "winter sun little rain";
-                break;
+                case 17:
+                    weather = "winter sun little rain";
+                    break;
 
-            case 18:
-                weather = "winter sun little rain doe";
-                break;
+                case 18:
+                    weather = "winter sun little rain doe";
+                    break;
 
-            case 19:
-                weather = "winter snow and SUN";
-                break;
+                case 19:
+                    weather = "winter snow and SUN";
+                    break;
 
-            case 20:
-                weather = "sleet and sun and THUNDER vry";
-                break;
+                case 20:
+                    weather = "sleet and sun and THUNDER vry";
+                    break;
 
-            case 21:
-                weather = "snowy sun vry THUNDER";
-                break;
+                case 21:
+                    weather = "snowy sun vry THUNDER";
+                    break;
 
-            case 22:
-                weather = "litle rain och THUNDER such not";
-                break;
+                case 22:
+                    weather = "litle rain och THUNDER such not";
+                    break;
 
-            case 23:
-                weather = "sleet and thunder very not";
-                break;
+                case 23:
+                    weather = "sleet and thunder very not";
+                    break;
+            }
         }
 
         titleTV.setText("wow");
-        windTV.setText("very windy "+windspeedValue+"M/s");
-        rainTV.setText("so "+weather+" wow");
-        temperatureTV.setText("wow " + temperatureValue + " degeres");
-        cloudyTV.setText("many cloud "+cloudinessValue+ " precent");
+        windTV.setText(windspeedValue);
+        rainTV.setText("so " + weather + " wow");
+        temperatureTV.setText(temperatureValue);
+        cloudyTV.setText(cloudinessValue);
     }
 
-class RetrieveWeatherData extends Thread {
+    class RetrieveWeatherData extends Thread {
 
-    public RetrieveWeatherData(){
+        public RetrieveWeatherData() {
 
-    }
-    @Override
-    public void run() {
+        }
 
-        try {
-            URL weatherCastUrl = new URL("http://api.yr.no/weatherapi/locationforecast/1.8/?lat=62.23534;lon=17.17203");
+        @Override
+        public void run() {
 
-            InputStream weatherCastInputStream = weatherCastUrl.openStream();
+            try {
+                URL weatherCastUrl = new URL("http://api.yr.no/weatherapi/locationforecast/1.8/?lat=62.23534;lon=17.17203");
 
-            DocumentBuilderFactory weatherCastInstance = DocumentBuilderFactory
-                    .newInstance();
-            DocumentBuilder weatherCastDocumentBuilder = weatherCastInstance.newDocumentBuilder();
-            InputSource weatherCastIs = new InputSource(weatherCastInputStream);
-            Document weatherCastXmlDocument = weatherCastDocumentBuilder.parse(weatherCastIs);
+                InputStream weatherCastInputStream = weatherCastUrl.openStream();
 
-            NodeList locationsList = weatherCastXmlDocument.getElementsByTagName("location");
-            Element location = (Element) locationsList.item(0);
-            Element location2 = (Element) locationsList.item(1);
+                DocumentBuilderFactory weatherCastInstance = DocumentBuilderFactory
+                        .newInstance();
+                DocumentBuilder weatherCastDocumentBuilder = weatherCastInstance.newDocumentBuilder();
+                InputSource weatherCastIs = new InputSource(weatherCastInputStream);
+                Document weatherCastXmlDocument = weatherCastDocumentBuilder.parse(weatherCastIs);
 
-            NodeList symbolList = location2.getElementsByTagName("symbol");
-            Element symbol = (Element) symbolList.item(0);
-            symbolValue = Integer.parseInt(symbol.getAttribute("number"));
+                NodeList locationsList = weatherCastXmlDocument.getElementsByTagName("location");
+                Element location = (Element) locationsList.item(0);
+                Element location2 = (Element) locationsList.item(1);
 
-            NodeList temperatureList = location.getElementsByTagName("temperature");
-            Element temperature = (Element) temperatureList.item(0);
-            temperatureValue = temperature.getAttribute("value");
+                NodeList symbolList = location2.getElementsByTagName("symbol");
+                Element symbol = (Element) symbolList.item(0);
+                symbolValue = Integer.parseInt(symbol.getAttribute("number"));
 
-            NodeList windspeedList = location.getElementsByTagName("windSpeed");
-            Element windspeed = (Element) windspeedList.item(0);
-            windspeedValue = windspeed.getAttribute("mps");
+                NodeList temperatureList = location.getElementsByTagName("temperature");
+                Element temperature = (Element) temperatureList.item(0);
+                temperatureValue = "wow " + temperature.getAttribute("value") + " degeres";
 
-            NodeList cloudinessList = location.getElementsByTagName("cloudiness");
-            Element cloudiness = (Element) cloudinessList.item(0);
-            cloudinessValue = cloudiness.getAttribute("percent");
+                NodeList windspeedList = location.getElementsByTagName("windSpeed");
+                Element windspeed = (Element) windspeedList.item(0);
+                windspeedValue = "very windy " + windspeed.getAttribute("mps") + "M/s";
+
+                NodeList cloudinessList = location.getElementsByTagName("cloudiness");
+                Element cloudiness = (Element) cloudinessList.item(0);
+                cloudinessValue = "many cloud " + cloudiness.getAttribute("percent") + " precent";
 
 
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ParserConfigurationException e) {
-            e.printStackTrace();
-        } catch (SAXException e) {
-            e.printStackTrace();
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ParserConfigurationException e) {
+                e.printStackTrace();
+            } catch (SAXException e) {
+                e.printStackTrace();
+            }
         }
     }
-}
 }
