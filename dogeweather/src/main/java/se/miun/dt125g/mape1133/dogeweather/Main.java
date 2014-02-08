@@ -23,7 +23,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 public class Main extends Activity {
 
-    String temperature =null;
+    String temperatureValue ="yollo";
     String windspeed =null;
     String cloudiness =null;
 
@@ -46,7 +46,7 @@ public class Main extends Activity {
             ex.printStackTrace();
         }
 
-    tv.setText(temperature);
+    tv.setText(temperatureValue);
     }
 
 class RetrieveWeatherData extends Thread {
@@ -56,9 +56,6 @@ class RetrieveWeatherData extends Thread {
     }
     @Override
     public void run() {
-        String temperatureString=null;
-        String windSpeedString=null;
-        String cloudinessString=null;
 
         try {
             URL weatherCastUrl = new URL("http://api.yr.no/weatherapi/locationforecast/1.8/?lat=62.23534;lon=17.17203");
@@ -71,15 +68,14 @@ class RetrieveWeatherData extends Thread {
             InputSource weatherCastIs = new InputSource(weatherCastInputStream);
             Document weatherCastXmlDocument = weatherCastDocumentBuilder.parse(weatherCastIs);
 
-            NodeList hourlyForecastList = weatherCastXmlDocument.getElementsByTagName("location");
-            Element temperatureElement = (Element) hourlyForecastList.item(0);
-            temperatureString = ((Node) temperatureElement).getTextContent();
+            NodeList locationsList = weatherCastXmlDocument.getElementsByTagName("location");
+            Element location = (Element) locationsList.item(0);
 
-            Element windSpeedElement = (Element) hourlyForecastList.item(2);
-            windSpeedString = ((Node) windSpeedElement).getTextContent();
+            NodeList temperatureList = location.getElementsByTagName("temperature");
+            Element temperature = (Element) temperatureList.item(0);
 
-            Element cloudinessElement = (Element) hourlyForecastList.item(5);
-            cloudinessString = ((Node) cloudinessElement).getTextContent();
+            temperatureValue = temperature.getAttribute("value");
+
 
         } catch (MalformedURLException e) {
             e.printStackTrace();
@@ -90,10 +86,6 @@ class RetrieveWeatherData extends Thread {
         } catch (SAXException e) {
             e.printStackTrace();
         }
-
-        temperature = "Temp: "+temperatureString;
-        windspeed = "Windspeed: " + windSpeedString;
-        cloudiness = "Cloudiness: " + cloudinessString;
     }
 }
 }
