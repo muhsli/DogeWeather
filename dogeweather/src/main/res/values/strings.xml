@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">DogeWeather</string>
-    <string name="hello_world">Hello Doge people!</string>
-    <string name="action_settings">Settings1</string>
+    <string name="test_string">wow such weather</string>
+    <string name="image_string">Doge should fit here.</string>
 
 </resources>

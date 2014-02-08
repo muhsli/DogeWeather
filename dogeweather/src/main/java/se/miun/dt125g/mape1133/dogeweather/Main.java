@@ -1,65 +1,99 @@
 package se.miun.dt125g.mape1133.dogeweather;
 
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
+import android.app.Activity;
+import android.graphics.Typeface;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.os.Build;
+import android.widget.TextView;
 
-public class Main extends ActionBarActivity {
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
+public class Main extends Activity {
+
+    String temperature =null;
+    String windspeed =null;
+    String cloudiness =null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new PlaceholderFragment())
-                    .commit();
+        Typeface tf = Typeface.createFromAsset(getAssets(),
+                "fonts/comicsans.ttf");
+        TextView tv = (TextView) findViewById(R.id.titleText);
+        tv.setTypeface(tf);
+
+        RetrieveWeatherData weather = new RetrieveWeatherData();
+        weather.start();
+
+        try {
+            weather.join();
+        } catch (InterruptedException ex){
+            ex.printStackTrace();
         }
+
+    tv.setText(temperature);
     }
 
+class RetrieveWeatherData extends Thread {
 
+    public RetrieveWeatherData(){
+
+    }
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
+    public void run() {
+        String temperatureString=null;
+        String windSpeedString=null;
+        String cloudinessString=null;
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
+        try {
+            URL weatherCastUrl = new URL("http://api.yr.no/weatherapi/locationforecast/1.8/?lat=62.23534;lon=17.17203");
+
+            InputStream weatherCastInputStream = weatherCastUrl.openStream();
+
+            DocumentBuilderFactory weatherCastInstance = DocumentBuilderFactory
+                    .newInstance();
+            DocumentBuilder weatherCastDocumentBuilder = weatherCastInstance.newDocumentBuilder();
+            InputSource weatherCastIs = new InputSource(weatherCastInputStream);
+            Document weatherCastXmlDocument = weatherCastDocumentBuilder.parse(weatherCastIs);
+
+            NodeList hourlyForecastList = weatherCastXmlDocument.getElementsByTagName("location");
+            Element temperatureElement = (Element) hourlyForecastList.item(0);
+            temperatureString = ((Node) temperatureElement).getTextContent();
+
+            Element windSpeedElement = (Element) hourlyForecastList.item(2);
+            windSpeedString = ((Node) windSpeedElement).getTextContent();
+
+            Element cloudinessElement = (Element) hourlyForecastList.item(5);
+            cloudinessString = ((Node) cloudinessElement).getTextContent();
+
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        } catch (SAXException e) {
+            e.printStackTrace();
         }
-        return super.onOptionsItemSelected(item);
+
+        temperature = "Temp: "+temperatureString;
+        windspeed = "Windspeed: " + windSpeedString;
+        cloudiness = "Cloudiness: " + cloudinessString;
     }
-
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-
-        public PlaceholderFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            return rootView;
-        }
-    }
-
+}
 }
