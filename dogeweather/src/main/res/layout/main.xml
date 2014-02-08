@@ -42,7 +42,7 @@
             android:layout_alignEnd="@+id/imageView" />
 
         <TextView
-            android:id="@+id/veryText"
+            android:id="@+id/temperatureText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="30sp"
