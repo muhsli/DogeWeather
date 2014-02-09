@@ -3,6 +3,8 @@ package se.miun.dt125g.mape1133.dogeweather;
 import android.app.Activity;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.w3c.dom.Document;
@@ -35,14 +37,22 @@ public class Main extends Activity {
 
         Typeface tf = Typeface.createFromAsset(getAssets(),
                 "fonts/comicsans.ttf");
-        TextView titleTV = (TextView) findViewById(R.id.titleText);
-        titleTV.setTypeface(tf);
+
+        LinearLayout background = (LinearLayout) findViewById(R.id.background);
+        ImageView dogeImage = (ImageView) findViewById(R.id.imageView);
+
+        TextView addressTV = (TextView) findViewById(R.id.addressText);
+        addressTV.setTypeface(tf);
+
         TextView windTV = (TextView) findViewById(R.id.windText);
         windTV.setTypeface(tf);
+
         TextView rainTV = (TextView) findViewById(R.id.rainText);
         rainTV.setTypeface(tf);
+
         TextView temperatureTV = (TextView) findViewById(R.id.temperatureText);
         temperatureTV.setTypeface(tf);
+
         TextView cloudyTV = (TextView) findViewById(R.id.cloudyText);
         cloudyTV.setTypeface(tf);
 
@@ -62,99 +72,145 @@ public class Main extends Activity {
 
                 case 1:
                     weather = "sunny";
+                    background.setBackground(getResources().getDrawable(R.drawable.bg_sun));
+                    dogeImage.setImageDrawable(getResources().getDrawable(R.drawable.doge_sun));
                     break;
 
                 case 2:
                     weather = "little clouds";
+                    background.setBackground(getResources().getDrawable(R.drawable.bg_lightcloud));
+                    dogeImage.setImageDrawable(getResources().getDrawable(R.drawable.doge_lightcloud));
                     break;
 
                 case 3:
                     weather = "partly cloud";
+                    background.setBackground(getResources().getDrawable(R.drawable.bg_partlycloud));
+                    dogeImage.setImageDrawable(getResources().getDrawable(R.drawable.doge_partlycloud));
                     break;
 
                 case 4:
                     weather = "cloudy";
+                    background.setBackground(getResources().getDrawable(R.drawable.bg_verycloud));
+                    dogeImage.setImageDrawable(getResources().getDrawable(R.drawable.doge_cloud));
                     break;
 
                 case 5:
                     weather = "littel rain and sun";
+                    background.setBackground(getResources().getDrawable(R.drawable.bg_sun));
+                    dogeImage.setImageDrawable(getResources().getDrawable(R.drawable.doge_lightrain));
                     break;
 
                 case 6:
                     weather = "rain and THUNDER and sun";
+                    background.setBackground(getResources().getDrawable(R.drawable.bg_rain_thunder));
+                    dogeImage.setImageDrawable(getResources().getDrawable(R.drawable.doge_thunder));
                     break;
 
                 case 7:
                     weather = "sun and sleet";
+                    background.setBackground(getResources().getDrawable(R.drawable.bg_lightcloud));
+                    dogeImage.setImageDrawable(getResources().getDrawable(R.drawable.doge_rain));
                     break;
 
                 case 8:
                     weather = "snowy and sun";
+                    background.setBackground(getResources().getDrawable(R.drawable.bg_sun_winter));
+                    dogeImage.setImageDrawable(getResources().getDrawable(R.drawable.doge_sun));
                     break;
 
                 case 9:
                     weather = "little rain";
+                    background.setBackground(getResources().getDrawable(R.drawable.bg_rain));
+                    dogeImage.setImageDrawable(getResources().getDrawable(R.drawable.doge_lightrain));
                     break;
 
                 case 10:
                     weather = "rainy not niec";
+                    background.setBackground(getResources().getDrawable(R.drawable.bg_rain));
+                    dogeImage.setImageDrawable(getResources().getDrawable(R.drawable.doge_rain));
                     break;
 
                 case 11:
                     weather = "rain and THUNDER";
+                    background.setBackground(getResources().getDrawable(R.drawable.bg_rain_thunder));
+                    dogeImage.setImageDrawable(getResources().getDrawable(R.drawable.doge_thunder));
                     break;
 
                 case 12:
                     weather = "sleet not";
+                    background.setBackground(getResources().getDrawable(R.drawable.bg_sleet));
+                    dogeImage.setImageDrawable(getResources().getDrawable(R.drawable.doge_snow));
                     break;
 
                 case 13:
                     weather = "very snow";
+                    background.setBackground(getResources().getDrawable(R.drawable.bg_snow));
+                    dogeImage.setImageDrawable(getResources().getDrawable(R.drawable.doge_snow));
                     break;
 
                 case 14:
                     weather = "snow and THUNDER";
+                    background.setBackground(getResources().getDrawable(R.drawable.bg_thunder));
+                    dogeImage.setImageDrawable(getResources().getDrawable(R.drawable.doge_snow));
                     break;
 
                 case 15:
-                    weather = "foggy";
+                    weather = "foggy such spooky";
+                    background.setBackground(getResources().getDrawable(R.drawable.bg_fog));
+                    dogeImage.setImageDrawable(getResources().getDrawable(R.drawable.doge_fog));
                     break;
 
                 case 16:
                     weather = "winter sun";
+                    background.setBackground(getResources().getDrawable(R.drawable.bg_snow));
+                    dogeImage.setImageDrawable(getResources().getDrawable(R.drawable.doge_sun));
                     break;
 
                 case 17:
-                    weather = "winter sun little rain";
+                    weather = "little cloud";
+                    background.setBackground(getResources().getDrawable(R.drawable.bg_partlycloud_night));
+                    dogeImage.setImageDrawable(getResources().getDrawable(R.drawable.doge_lightcloud_winter));
                     break;
 
                 case 18:
                     weather = "winter sun little rain doe";
+                    background.setBackground(getResources().getDrawable(R.drawable.bg_snow));
+                    dogeImage.setImageDrawable(getResources().getDrawable(R.drawable.doge_lightrain));
                     break;
 
                 case 19:
                     weather = "winter snow and SUN";
+                    background.setBackground(getResources().getDrawable(R.drawable.bg_sun_winter));
+                    dogeImage.setImageDrawable(getResources().getDrawable(R.drawable.doge_sun));
                     break;
 
                 case 20:
                     weather = "sleet and sun and THUNDER vry";
+                    background.setBackground(getResources().getDrawable(R.drawable.bg_sleet));
+                    dogeImage.setImageDrawable(getResources().getDrawable(R.drawable.doge_thunder));
                     break;
 
                 case 21:
                     weather = "snowy sun vry THUNDER";
+                    background.setBackground(getResources().getDrawable(R.drawable.bg_sun_winter));
+                    dogeImage.setImageDrawable(getResources().getDrawable(R.drawable.doge_thunder));
                     break;
 
                 case 22:
                     weather = "litle rain och THUNDER such not";
+                    background.setBackground(getResources().getDrawable(R.drawable.bg_rain_thunder));
+                    dogeImage.setImageDrawable(getResources().getDrawable(R.drawable.doge_thunder));
                     break;
 
                 case 23:
                     weather = "sleet and thunder very not";
+                    background.setBackground(getResources().getDrawable(R.drawable.bg_sleet));
+                    dogeImage.setImageDrawable(getResources().getDrawable(R.drawable.doge_thunder));
                     break;
             }
         }
 
-        titleTV.setText("wow");
+        addressTV.setText("Sundsvall");
         windTV.setText(windspeedValue);
         rainTV.setText("so " + weather + " wow");
         temperatureTV.setText(temperatureValue);
