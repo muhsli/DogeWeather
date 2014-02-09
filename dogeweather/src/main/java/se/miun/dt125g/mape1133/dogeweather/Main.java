@@ -7,7 +7,6 @@ import android.widget.TextView;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -25,7 +24,7 @@ public class Main extends Activity {
 
     int symbolValue = 0;
     String weather = "much";
-    String temperatureValue = "disconect";
+    String temperatureValue = "no conect";
     String windspeedValue = "internet pls";
     String cloudinessValue = "not online wow";
 
@@ -57,7 +56,7 @@ public class Main extends Activity {
         }
 
         if (symbolValue == 0) {
-            weather = "connection not";
+            weather = "disconect not";
         } else {
             switch (symbolValue) {
 
