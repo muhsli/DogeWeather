@@ -1,8 +1,13 @@
 package se.miun.dt125g.mape1133.dogeweather;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Typeface;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -29,42 +34,107 @@ public class Main extends Activity {
     String temperatureValue = "no conect";
     String windspeedValue = "internet pls";
     String cloudinessValue = "not online wow";
+    double lat;
+    double lon;
+    LinearLayout background;
+    ImageView dogeImage;
+    TextView addressTV;
+    TextView windTV;
+    TextView rainTV;
+    TextView temperatureTV;
+    TextView cloudyTV;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        LocationListener locationListener;
+
         Typeface tf = Typeface.createFromAsset(getAssets(),
                 "fonts/comicsans.ttf");
 
-        LinearLayout background = (LinearLayout) findViewById(R.id.background);
-        ImageView dogeImage = (ImageView) findViewById(R.id.imageView);
+        background = (LinearLayout) findViewById(R.id.background);
+        dogeImage = (ImageView) findViewById(R.id.imageView);
 
-        TextView addressTV = (TextView) findViewById(R.id.addressText);
+        addressTV = (TextView) findViewById(R.id.addressText);
         addressTV.setTypeface(tf);
 
-        TextView windTV = (TextView) findViewById(R.id.windText);
+        windTV = (TextView) findViewById(R.id.windText);
         windTV.setTypeface(tf);
 
-        TextView rainTV = (TextView) findViewById(R.id.rainText);
+        rainTV = (TextView) findViewById(R.id.rainText);
         rainTV.setTypeface(tf);
 
-        TextView temperatureTV = (TextView) findViewById(R.id.temperatureText);
+        temperatureTV = (TextView) findViewById(R.id.temperatureText);
         temperatureTV.setTypeface(tf);
 
-        TextView cloudyTV = (TextView) findViewById(R.id.cloudyText);
+        cloudyTV = (TextView) findViewById(R.id.cloudyText);
         cloudyTV.setTypeface(tf);
 
-        RetrieveWeatherData retrieveWeatherDataThread = new RetrieveWeatherData();
-        retrieveWeatherDataThread.start();
-
         try {
-            retrieveWeatherDataThread.join();
-        } catch (InterruptedException ex) {
-            ex.printStackTrace();
+            lat = location.getLatitude();
+            lon = location.getLongitude();
+        } catch (Exception E) {
+            E.printStackTrace();
+            Log.d("Get Location",
+                    "Could not retrieve a Last Known Location",
+                    E.getCause());
+            addressTV.setText("lookng for yuo.. wow ");
         }
 
+        // Instantiates a LocationListener to listen for location changes
+        locationListener = new LocationListener() {
+            /*
+             * Here we listen for location changes, such as moving the
+             * device. When a location change is detected, we update the
+             * variables with the new position data, and then by every location change we
+             * naturally update also the textview.
+             */
+            public void onLocationChanged(Location location) {
+                lat = location.getLatitude();
+                lon = location.getLongitude();
+
+                RetrieveWeatherData retrieveWeatherDataThread = new RetrieveWeatherData(lat, lon);
+                retrieveWeatherDataThread.start();
+                try {
+                    retrieveWeatherDataThread.join();
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+                UpdateUI();
+            }
+
+            // If GPS is disabled we output to the user that it is needed to
+            // use this feature.
+            public void onProviderDisabled(String provider) {
+                addressTV.setText("GPS not onn!\nenabel GPS pls.. not wow");
+
+            }
+
+            public void onProviderEnabled(String provider) {
+                // Not of use for us in this purpose
+            }
+
+            public void onStatusChanged(String provider, int status,
+                                        Bundle extras) {
+                // Not of use for us in this purpose
+            }
+        };
+
+        /*
+			 * A setting for the locationmanager which sets how often to
+			 * retrieve location updates. Currently set to every minute
+			 * (60000 milliseconds), OR if device has moved 500 meters (or more).
+			 */
+        locationManager.requestLocationUpdates(
+                LocationManager.GPS_PROVIDER, 60000, 500, locationListener);
+    }
+
+    public void UpdateUI(){
         if (symbolValue == 0) {
             weather = "disconect not";
         } else {
@@ -210,7 +280,7 @@ public class Main extends Activity {
             }
         }
 
-        addressTV.setText("Sundsvall");
+        addressTV.setText("such Lat: "+lat+" much Lon: "+lon+" wow");
         windTV.setText(windspeedValue);
         rainTV.setText("so " + weather + " wow");
         temperatureTV.setText(temperatureValue);
@@ -219,15 +289,17 @@ public class Main extends Activity {
 
     class RetrieveWeatherData extends Thread {
 
-        public RetrieveWeatherData() {
+        String coordinatesURL;
 
+        public RetrieveWeatherData(double lat, double lon) {
+        coordinatesURL = "http://api.yr.no/weatherapi/locationforecast/1.8/?lat="+ lat +";lon="+lon;
         }
 
         @Override
         public void run() {
 
             try {
-                URL weatherCastUrl = new URL("http://api.yr.no/weatherapi/locationforecast/1.8/?lat=62.23534;lon=17.17203");
+                URL weatherCastUrl = new URL(coordinatesURL);
 
                 InputStream weatherCastInputStream = weatherCastUrl.openStream();
 
