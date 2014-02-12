@@ -280,7 +280,7 @@ public class Main extends Activity {
             }
         }
 
-        addressTV.setText("such Lat: "+lat+" much Lon: "+lon+" wow");
+        addressTV.setText(String.format("very location\nLat: %.2f", lat)+String.format(" Lon: %.2f", lon));
         windTV.setText(windspeedValue);
         rainTV.setText("so " + weather + " wow");
         temperatureTV.setText(temperatureValue);
