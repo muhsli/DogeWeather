@@ -3,6 +3,8 @@ package se.miun.dt125g.mape1133.dogeweather;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Typeface;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -22,6 +24,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
+import java.util.Locale;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -34,6 +38,7 @@ public class Main extends Activity {
     String temperatureValue = "no conect";
     String windspeedValue = "internet pls";
     String cloudinessValue = "not online wow";
+    String adress = "elgant doge";
     double lat;
     double lon;
     LinearLayout background;
@@ -51,7 +56,7 @@ public class Main extends Activity {
         setContentView(R.layout.main);
 
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
         LocationListener locationListener;
 
         Typeface tf = Typeface.createFromAsset(getAssets(),
@@ -105,13 +110,14 @@ public class Main extends Activity {
                 } catch (InterruptedException ex) {
                     ex.printStackTrace();
                 }
+                getMyLocationAddress();
                 UpdateUI();
             }
 
             // If GPS is disabled we output to the user that it is needed to
             // use this feature.
             public void onProviderDisabled(String provider) {
-                addressTV.setText("GPS not onn!\nenabel GPS pls.. not wow");
+                addressTV.setText("no conect to netwroke!\nenabel netwroke pls.. not wow");
 
             }
 
@@ -131,7 +137,29 @@ public class Main extends Activity {
 			 * (60000 milliseconds), OR if device has moved 500 meters (or more).
 			 */
         locationManager.requestLocationUpdates(
-                LocationManager.GPS_PROVIDER, 60000, 500, locationListener);
+                LocationManager.NETWORK_PROVIDER, 60000, 500, locationListener);
+    }
+
+    public void getMyLocationAddress() {
+
+        Geocoder geocoder= new Geocoder(this, Locale.ENGLISH);
+
+        try {
+
+            List<Address> addresses = geocoder.getFromLocation(lat ,lon, 1);
+
+            if(addresses != null) {
+
+                Address fetchedAddress = addresses.get(0);
+
+                adress = fetchedAddress.getLocality().toLowerCase();
+
+            }
+        }
+        catch (IOException e) {
+            Log.d("Geocoder", "Failed to retrieve adress");
+            e.printStackTrace();
+        }
     }
 
     public void UpdateUI(){
@@ -280,7 +308,7 @@ public class Main extends Activity {
             }
         }
 
-        addressTV.setText(String.format("very location\nLat: %.2f", lat)+String.format(" Lon: %.2f", lon));
+        addressTV.setText(adress);
         windTV.setText(windspeedValue);
         rainTV.setText("so " + weather + " wow");
         temperatureTV.setText(temperatureValue);
@@ -319,15 +347,15 @@ public class Main extends Activity {
 
                 NodeList temperatureList = location.getElementsByTagName("temperature");
                 Element temperature = (Element) temperatureList.item(0);
-                temperatureValue = "wow " + temperature.getAttribute("value") + " degeres";
+                temperatureValue = "wow " + temperature.getAttribute("value") + "°C";
 
                 NodeList windspeedList = location.getElementsByTagName("windSpeed");
                 Element windspeed = (Element) windspeedList.item(0);
-                windspeedValue = "very windy " + windspeed.getAttribute("mps") + "M/s";
+                windspeedValue = "very windy " + windspeed.getAttribute("mps") + " m/s";
 
                 NodeList cloudinessList = location.getElementsByTagName("cloudiness");
                 Element cloudiness = (Element) cloudinessList.item(0);
-                cloudinessValue = "many cloud " + cloudiness.getAttribute("percent") + " precent";
+                cloudinessValue = "many cloud " + String.format( "%.0f", Double.parseDouble(cloudiness.getAttribute("percent"))) + "%";
 
 
             } catch (MalformedURLException e) {
