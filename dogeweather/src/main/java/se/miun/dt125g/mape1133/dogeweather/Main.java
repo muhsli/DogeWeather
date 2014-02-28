@@ -56,7 +56,7 @@ public class Main extends Activity {
         setContentView(R.layout.main);
 
         // Location manager används för att hämta användarens position. Vi använder oss av NETWORK_PROVIDER
-        // som kollar lovation baserat på nätverket.
+        // som kollar location baserat på nätverket.
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         LocationListener locationListener;
 
@@ -87,7 +87,7 @@ public class Main extends Activity {
         locationListener = new LocationListener() {
 
             // Här lyssnar vi efter förändringar i positionen, t.ex. om användaren rör på sig
-            // När positionen har ändrats uppdateras vaiablerna "lat" och "lon" med den nya gps-datan.
+            // När positionen har ändrats uppdateras variablerna "lat" och "lon" med den nya gps-datan.
             // När de har uppdaterats så körs metoderna getMyLocationAddress() och UpdateUI().
             public void onLocationChanged(Location location) {
                 lat = location.getLatitude();
@@ -104,7 +104,7 @@ public class Main extends Activity {
                 UpdateUI();
             }
 
-            // Ifall GPSen är avstängs på enheten uppdateras en textView
+            // Ifall GPSen är avstängd på enheten uppdateras en textView
             public void onProviderDisabled(String provider) {
                 addressTV.setText("no conect to netwroke!\nenabel netwroke pls.. not wow");
 
@@ -121,7 +121,7 @@ public class Main extends Activity {
         };
 
         /*
-        requestLocationUpdates gör en inställning till locationManager, som styr uppdateringsintervallet av din position.
+        requestLocationUpdates gör en inställning till locationManager, som styr uppdaterings-intervallet av din position.
         Här kör vi på inställningen att den hämtar positionen var 15:e min (900000 millisekunder), ELLER om enheten har flyttats mer än 1 kilometer (1000 meter).
          */
         locationManager.requestLocationUpdates(
