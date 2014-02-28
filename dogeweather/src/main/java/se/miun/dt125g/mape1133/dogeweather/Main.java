@@ -55,12 +55,16 @@ public class Main extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
+        // Location manager används för att hämta användarens position. Vi använder oss av NETWORK_PROVIDER
+        // som kollar lovation baserat på nätverket.
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         LocationListener locationListener;
 
+        // Här sätter vi vårat typsnitt som vi har hämtat.
         Typeface tf = Typeface.createFromAsset(getAssets(),
                 "fonts/comicsans.ttf");
 
+        // Initierar TextViews, Layouts, ImageViews och sätter typsnittet på TextViews.
         background = (LinearLayout) findViewById(R.id.background);
         dogeImage = (ImageView) findViewById(R.id.imageView);
 
@@ -79,14 +83,12 @@ public class Main extends Activity {
         cloudyTV = (TextView) findViewById(R.id.cloudyText);
         cloudyTV.setTypeface(tf);
 
-        // Instantiates a LocationListener to listen for location changes
+        // Initierar en LocationListener som lyssnar efter förändringar i positionen
         locationListener = new LocationListener() {
-            /*
-             * Here we listen for location changes, such as moving the
-             * device. When a location change is detected, we update the
-             * variables with the new position data, and then by every location change we
-             * naturally update also the textview.
-             */
+
+            // Här lyssnar vi efter förändringar i positionen, t.ex. om användaren rör på sig
+            // När positionen har ändrats uppdateras vaiablerna "lat" och "lon" med den nya gps-datan.
+            // När de har uppdaterats så körs metoderna getMyLocationAddress() och UpdateUI().
             public void onLocationChanged(Location location) {
                 lat = location.getLatitude();
                 lon = location.getLongitude();
@@ -102,8 +104,7 @@ public class Main extends Activity {
                 UpdateUI();
             }
 
-            // If GPS is disabled we output to the user that it is needed to
-            // use this feature.
+            // Ifall GPSen är avstängs på enheten uppdateras en textView
             public void onProviderDisabled(String provider) {
                 addressTV.setText("no conect to netwroke!\nenabel netwroke pls.. not wow");
 
@@ -120,22 +121,17 @@ public class Main extends Activity {
         };
 
         /*
-             * A setting for the locationmanager which sets how often to
-			 * retrieve location updates. Currently set to every minute
-			 * (60000 milliseconds), OR if device has moved 500 meters (or more).
-			 */
-        /*
         requestLocationUpdates gör en inställning till locationManager, som styr uppdateringsintervallet av din position.
         Här kör vi på inställningen att den hämtar positionen var 15:e min (900000 millisekunder), ELLER om enheten har flyttats mer än 1 kilometer (1000 meter).
          */
         locationManager.requestLocationUpdates(
-                LocationManager.NETWORK_PROVIDER, 900000, 500, locationListener);
+                LocationManager.NETWORK_PROVIDER, 900000, 1000, locationListener);
     }
 
     /*
     getMyLocationAddress använder Geocoder för reversed geocoding.
     Vad vi gör här är att vi tar koordinaterna, som har hämtats utifrån network.provider,
-    och converterar således dessa till adresser.
+    och konverterar således dessa till adresser.
     Detta kan resultera i flera adresser, i synnerhet eftersom vi använder oss av network.provider med låg nogrannhet, och därför måste man spara dessa i en lista.
     Sedan tar vi helt enkelt första adressen i listan, och sparar ner dennes "locality" (stad) till Stringen address.
      */

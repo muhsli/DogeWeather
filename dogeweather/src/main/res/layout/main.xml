@@ -64,7 +64,6 @@
             android:layout_alignLeft="@+id/rainText"
             android:layout_alignStart="@+id/rainText" />
 
-
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="300dp"
