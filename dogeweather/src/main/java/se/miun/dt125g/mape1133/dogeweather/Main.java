@@ -110,12 +110,12 @@ public class Main extends Activity {
             }
 
             public void onProviderEnabled(String provider) {
-                // Not of use for us in this purpose
+                // Den här behöver vi inte ta i beaktning i denna applikation.
             }
 
             public void onStatusChanged(String provider, int status,
                                         Bundle extras) {
-                // Not of use for us in this purpose
+                // Den här behöver vi inte ta i beaktning i denna applikation.
             }
         };
 
@@ -124,15 +124,20 @@ public class Main extends Activity {
 			 * retrieve location updates. Currently set to every minute
 			 * (60000 milliseconds), OR if device has moved 500 meters (or more).
 			 */
+        /*
+        requestLocationUpdates gör en inställning till locationManager, som styr uppdateringsintervallet av din position.
+        Här kör vi på inställningen att den hämtar positionen var 15:e min (900000 millisekunder), ELLER om enheten har flyttats mer än 1 kilometer (1000 meter).
+         */
         locationManager.requestLocationUpdates(
-                LocationManager.NETWORK_PROVIDER, 60000, 500, locationListener);
+                LocationManager.NETWORK_PROVIDER, 900000, 500, locationListener);
     }
 
     /*
     getMyLocationAddress använder Geocoder för reversed geocoding.
     Vad vi gör här är att vi tar koordinaterna, som har hämtats utifrån network.provider,
-    och converterar således detta till adresser.
-    Detta kan resultera i flera adresser, och därför måste man spara dessa i en lista.
+    och converterar således dessa till adresser.
+    Detta kan resultera i flera adresser, i synnerhet eftersom vi använder oss av network.provider med låg nogrannhet, och därför måste man spara dessa i en lista.
+    Sedan tar vi helt enkelt första adressen i listan, och sparar ner dennes "locality" (stad) till Stringen address.
      */
     public void getMyLocationAddress() {
 
@@ -155,6 +160,10 @@ public class Main extends Activity {
         }
     }
 
+    /*
+    UpdateUI uppdaterar activityns bakgrund, doge och textview, som speglar det nuvarande väderförhållandet baserat på ett symbolvärde som hämtas från api.yr.no
+    Sedan uppdaterar den resterande textviews med övrig väderdata som hämtas från api:t.
+     */
     public void UpdateUI() {
         if (symbolValue == 0) {
             weather = "disconect not";
@@ -308,6 +317,13 @@ public class Main extends Activity {
         cloudyTV.setText(cloudinessValue);
     }
 
+    /*
+    Klassen RetrieveWeatherData körs i en egen tråd, och startas med konstruktorn som kräver argumenten lat och lon.
+    För att köra tråden krävs således att lat och lon har hämtats med locationmanagern.
+    Det som händer här är att konstruktorn bygger Stringen coordinatesURL till en giltig URL för en förfrågan mot api.yr.no.
+    När tråden exekverar konverteras Stringen coordinatesURL till en URL med namnet coordinatesURL.
+    Denna används sedan för att hämta väderdata via XML, och vi hämtar sedan ur denna ut valda värden baserat på attribut, ifrån utvalda element baserat på TagName.
+     */
     class RetrieveWeatherData extends Thread {
 
         String coordinatesURL;
