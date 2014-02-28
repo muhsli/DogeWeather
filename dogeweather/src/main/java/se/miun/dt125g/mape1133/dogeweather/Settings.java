@@ -1,13 +1,7 @@
 package se.miun.dt125g.mape1133.dogeweather;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
-import android.widget.TextView;
-import android.app.Activity;
 
 public class Settings extends PreferenceActivity {
 
@@ -20,13 +14,13 @@ public class Settings extends PreferenceActivity {
 
     }
 
-	// Overridar metoden onBackPressed för att kunna använda mina egna custom
-	// animations
-	@Override
-	public void onBackPressed() {
-		super.onBackPressed();
-		// Overridar transitionen vid tryck på "bakåt / back" till mina egna
-		// custom animationer
-		overridePendingTransition(R.anim.customfadein, R.anim.customfadeout);
-	}
+    // Overridar metoden onBackPressed för att kunna använda mina egna custom
+    // animations
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        // Overridar transitionen vid tryck på "bakåt / back" till mina egna
+        // custom animationer
+        overridePendingTransition(R.anim.customfadein, R.anim.customfadeout);
+    }
 }

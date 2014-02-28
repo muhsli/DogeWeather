@@ -3,7 +3,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@drawable/background"
-    tools:context=".License" >
+    tools:context=".License">
 
     <ScrollView
         android:id="@+id/licenseScrollView"
@@ -13,15 +13,14 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="20dp"
-        android:background="@android:color/transparent" >
+        android:background="@android:color/transparent">
 
         <TextView
             android:id="@+id/licenseTextView"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:textColor="@android:color/white"
-            android:textSize="15sp" >
-        </TextView>
+            android:textSize="15sp" />
     </ScrollView>
 
 </RelativeLayout>
