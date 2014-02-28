@@ -80,17 +80,6 @@ public class Main extends Activity {
         cloudyTV = (TextView) findViewById(R.id.cloudyText);
         cloudyTV.setTypeface(tf);
 
-        try {
-            lat = location.getLatitude();
-            lon = location.getLongitude();
-        } catch (Exception E) {
-            E.printStackTrace();
-            Log.d("Get Location",
-                    "Could not retrieve a Last Known Location",
-                    E.getCause());
-            addressTV.setText("lookng for yuo.. wow ");
-        }
-
         // Instantiates a LocationListener to listen for location changes
         locationListener = new LocationListener() {
             /*
@@ -132,7 +121,7 @@ public class Main extends Activity {
         };
 
         /*
-			 * A setting for the locationmanager which sets how often to
+             * A setting for the locationmanager which sets how often to
 			 * retrieve location updates. Currently set to every minute
 			 * (60000 milliseconds), OR if device has moved 500 meters (or more).
 			 */
@@ -140,29 +129,34 @@ public class Main extends Activity {
                 LocationManager.NETWORK_PROVIDER, 60000, 500, locationListener);
     }
 
+    /*
+    getMyLocationAddress använder Geocoder för reversed geocoding.
+    Vad vi gör här är att vi tar koordinaterna, som har hämtats utifrån network.provider,
+    och converterar således detta till adresser.
+    Detta kan resultera i flera adresser, och därför måste man spara dessa i en lista.
+     */
     public void getMyLocationAddress() {
 
-        Geocoder geocoder= new Geocoder(this, Locale.ENGLISH);
+        Geocoder geocoder = new Geocoder(this, Locale.ENGLISH);
 
         try {
 
-            List<Address> addresses = geocoder.getFromLocation(lat ,lon, 1);
+            List<Address> addresses = geocoder.getFromLocation(lat, lon, 1);
 
-            if(addresses != null) {
+            if (addresses != null) {
 
                 Address fetchedAddress = addresses.get(0);
 
                 adress = fetchedAddress.getLocality().toLowerCase();
 
             }
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             Log.d("Geocoder", "Failed to retrieve adress");
             e.printStackTrace();
         }
     }
 
-    public void UpdateUI(){
+    public void UpdateUI() {
         if (symbolValue == 0) {
             weather = "disconect not";
         } else {
@@ -320,7 +314,7 @@ public class Main extends Activity {
         String coordinatesURL;
 
         public RetrieveWeatherData(double lat, double lon) {
-        coordinatesURL = "http://api.yr.no/weatherapi/locationforecast/1.8/?lat="+ lat +";lon="+lon;
+            coordinatesURL = "http://api.yr.no/weatherapi/locationforecast/1.8/?lat=" + lat + ";lon=" + lon;
         }
 
         @Override
@@ -355,7 +349,7 @@ public class Main extends Activity {
 
                 NodeList cloudinessList = location.getElementsByTagName("cloudiness");
                 Element cloudiness = (Element) cloudinessList.item(0);
-                cloudinessValue = "many cloud " + String.format( "%.0f", Double.parseDouble(cloudiness.getAttribute("percent"))) + "%";
+                cloudinessValue = "many cloud " + String.format("%.0f", Double.parseDouble(cloudiness.getAttribute("percent"))) + "%";
 
 
             } catch (MalformedURLException e) {
