@@ -2,11 +2,24 @@
 <resources>
 
     <string name="app_name">DogeWeather</string>
+    <string name="menu_settings" translatable="false">Settings</string>
+    <string name="menu_license" translatable="false">License</string>
+    <string name="title_activity_settings" translatable="false">Settings</string>
+    <string name="title_activity_license" translatable="false">License</string>
     <string name="test_string">much hadsome doge</string>
     <string name="wind_string">location pls</string>
     <string name="image_string">Doge should fit here.</string>
-    <string name ="rain_string">wer are you</string>
+    <string name="rain_string">wer are you</string>
     <string name="very_string">tryin to find</string>
     <string name="cloudy_string">wow will find</string>
+
+    <string name="settings_notification_shownotiftitle">Show Notifications</string>
+    <string name="settings_notification_shownotifsummary">Turn on to show notifications</string>
+    <string name="settings_service_weatherupdatetitle">Weather Update Frequency</string>
+    <string name="settings_service_weatherupdatesummary">How often to download the latest weather</string>
+    <string name="settings_service_backgroundservice">Background Service</string>
+    <string name="settings_service_download">Download weather in background</string>
+    <string name="settings_service">Service</string>
+    <string name="settings_notification">Notifications</string>
 
 </resources>

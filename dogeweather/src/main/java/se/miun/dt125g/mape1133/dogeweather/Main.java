@@ -1,7 +1,9 @@
 package se.miun.dt125g.mape1133.dogeweather;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.location.Address;
 import android.location.Geocoder;
@@ -10,6 +12,8 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -126,6 +130,38 @@ public class Main extends Activity {
          */
         locationManager.requestLocationUpdates(
                 LocationManager.NETWORK_PROVIDER, 900000, 1000, locationListener);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflates/Skapar menyn; detta lägger till objekt till objektet till
+        // titlebaren om den finns.
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Skapar en custom animation activityoptions med mina custom animations
+        ActivityOptions myAnim = ActivityOptions.makeCustomAnimation(this,
+                R.anim.customfadein, R.anim.customfadeout);
+        // Hanterar ett klick på / val av objekt i menyn
+        switch (item.getItemId()) {
+            // Om man klickar på "Settings"
+            case R.id.menu_settings:
+                // Skapar ett intent som startar Settings activityn, och startar detta
+                // med animationen myAnim.
+                startActivity(new Intent(Main.this, Settings.class),
+                        myAnim.toBundle());
+                return true;
+
+            case R.id.menu_license:
+                startActivity(new Intent(Main.this, License.class),
+                        myAnim.toBundle());
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     /*
