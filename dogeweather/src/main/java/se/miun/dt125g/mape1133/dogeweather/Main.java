@@ -56,7 +56,6 @@ public class Main extends Activity {
         setContentView(R.layout.main);
 
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
         LocationListener locationListener;
 
         Typeface tf = Typeface.createFromAsset(getAssets(),
