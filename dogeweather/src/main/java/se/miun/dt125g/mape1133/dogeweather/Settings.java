@@ -12,6 +12,16 @@ public class Settings extends PreferenceActivity {
         getFragmentManager().beginTransaction().replace(android.R.id.content, new MyPreferenceFragment()).commit();
     }
 
+    // Overridar metoden onBackPressed för att kunna använda mina egna custom
+    // animations
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        // Overridar transitionen vid tryck på "bakåt / back" till mina egna
+        // custom animationer
+        overridePendingTransition(R.anim.customfadein, R.anim.customfadeout);
+    }
+
     public static class MyPreferenceFragment extends PreferenceFragment {
 
         @Override
@@ -21,15 +31,5 @@ public class Settings extends PreferenceActivity {
             addPreferencesFromResource(R.xml.settings);
 
         }
-    }
-
-    // Overridar metoden onBackPressed för att kunna använda mina egna custom
-    // animations
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        // Overridar transitionen vid tryck på "bakåt / back" till mina egna
-        // custom animationer
-        overridePendingTransition(R.anim.customfadein, R.anim.customfadeout);
     }
 }

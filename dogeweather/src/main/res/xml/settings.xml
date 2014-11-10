@@ -3,24 +3,24 @@
 
     <PreferenceCategory android:title="@string/settings_service">
         <SwitchPreference
-            android:defaultValue="false"
-            android:title="@string/settings_service_backgroundservice"
-            android:summary="@string/settings_service_download"
-            android:key="prefUsername"></SwitchPreference>
+                android:defaultValue="false"
+                android:title="@string/settings_service_backgroundservice"
+                android:summary="@string/settings_service_download"
+                android:key="prefUsername"/>
         <ListPreference
-            android:key="prefSyncFrequency"
-            android:entries="@array/syncFrequency"
-            android:summary="@string/settings_service_weatherupdatesummary"
-            android:entryValues="@array/syncFrequencyValues"
-            android:title="@string/settings_service_weatherupdatetitle" />
+                android:key="prefSyncFrequency"
+                android:entries="@array/syncFrequency"
+                android:summary="@string/settings_service_weatherupdatesummary"
+                android:entryValues="@array/syncFrequencyValues"
+                android:title="@string/settings_service_weatherupdatetitle"/>
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/settings_notification">
         <SwitchPreference
-            android:defaultValue="false"
-            android:key="prefSendReport"
-            android:summary="@string/settings_notification_shownotifsummary"
-            android:title="@string/settings_notification_shownotiftitle"></SwitchPreference>
+                android:defaultValue="false"
+                android:key="prefSendReport"
+                android:summary="@string/settings_notification_shownotifsummary"
+                android:title="@string/settings_notification_shownotiftitle"/>
     </PreferenceCategory>
 
 </PreferenceScreen>
