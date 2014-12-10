@@ -355,7 +355,7 @@ public class Main extends Activity {
         String coordinatesURL;
 
         public RetrieveWeatherData(double lat, double lon) {
-            coordinatesURL = "http://api.yr.no/weatherapi/locationforecast/1.8/?lat=" + lat + ";lon=" + lon;
+            coordinatesURL = "http://api.yr.no/weatherapi/locationforecast/1.9/?lat=" + lat + ";lon=" + lon;
         }
 
         @Override
